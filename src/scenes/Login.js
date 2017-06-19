@@ -119,11 +119,6 @@ export default class Login extends Component {
 		this.props.dispatch(loginUIActions.setIsSignup(!this.props.isSignup))
 	}
 
-	onChangeUserType(index) {
-		const isProvider = index === 0 ? false : true
-		this.props.dispatch(loginUIActions.setIsProvider(isProvider))
-	}
-
 
 	submit() {
 
