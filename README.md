@@ -1,6 +1,4 @@
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
-
-I created this template to help expidite the proccess of creating a user account based React Native app using Redux and [Parse Server](https://github.com/parse-community/parse-server) for the backend.
+I created this template to help expedite the proccess of creating a user account based React Native app using Redux and [Parse Server](https://github.com/parse-community/parse-server) for the backend. It's based off the [Create React Native App](https://github.com/react-community/create-react-native-app)
 
 It primarily uses [Parse-Lite](https://github.com/andrewimm/parse-lite) but also needs the official [Parse JS SDK](https://github.com/parse-community/Parse-SDK-JS) for certain things like Live Query and File uploads
 
