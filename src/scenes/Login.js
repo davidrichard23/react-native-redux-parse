@@ -90,6 +90,7 @@ export default class Login extends Component {
 				<StyledTextInput 
 					placeholder='Username'
 					value={username.value} 
+					autoCapitalize='none'
 					autoCorrect={false}
 					borderRadius={3}
 					onChangeText={this.onChangeText.bind(this, 'username')} 
@@ -137,13 +138,13 @@ export default class Login extends Component {
 
 	login() {
 
-		const email = this.props.user.email.value
+		const username = this.props.user.username.value
 		const password = this.props.user.password.value
 
-		this.props.dispatch(userActions.login(email, password))
+		this.props.dispatch(userActions.login(username, password))
 		.then((user) => {
 			if (user)
-				this.goToHome(user)
+				this.goToHome()
 		}).done()
 	}
 
@@ -151,12 +152,11 @@ export default class Login extends Component {
 	signup() {
 
 		const user = this.props.user
-		const isProvider = this.props.isProvider
 
-		this.props.dispatch(loginUIActions.validateSignup(user, isProvider))
+		this.props.dispatch(loginUIActions.validateSignup(user))
 		.then((isInvalid) => {
 			if (!isInvalid) {
-				this.props.dispatch(userActions.signup(user, isProvider))
+				this.props.dispatch(userActions.signup(user))
 				.then((auth) => {
 					if (auth){
 						this.goToUnverifiedEmailScreen()
@@ -175,17 +175,9 @@ export default class Login extends Component {
 		})
 	}
 
-
-	goToHome(user) {
-
-		const routes = this.props.nav.routes
-		const isPatientUser = user.type === 'PATIENT'
-
-		actions = [NavigationActions.navigate({ routeName: 'Main'})]
-		this.props.navigation.dispatch(NavigationActions.reset({index: 0, key: null, actions: actions}))
-
-		if (isPatientUser)
-			this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({routeName: 'Patient', params: {isPatientUser}})]}))
+	
+	goToHome() {
+		this.props.navigation.dispatch(NavigationActions.reset({index: 0, key: null, actions: [NavigationActions.navigate({ routeName: 'Main'})]}))
 	}
 
 }

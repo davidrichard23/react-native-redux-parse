@@ -49,6 +49,7 @@ export function login(username, password) {
 	return (dispatch) => {
 
 		dispatch({type: 'USER_LOGIN'})
+		username = username.toLowerCase()
 
 		return User.logIn(app, {username, password})
 		.then((auth) => {
@@ -69,16 +70,16 @@ export function login(username, password) {
 }
 
 
-export function signup(info, isProvider) {
+export function signup(info) {
 
 	return (dispatch, getState) => {
 
 		let user = null
 		let sessionToken = null
 
-		const email = info.email.value
+		const email = info.email.value.toLowerCase()
 		const password = info.password.value
-		const username = info.username.value
+		const username = info.username.value.toLowerCase()
 
 		dispatch({type: 'USER_SIGNUP'})
 
@@ -200,10 +201,6 @@ export function checkEmailVerification() {
 				const newAuth = {user: results[0], sessionToken: state.user.sessionToken}
 				AsyncStorage.setItem('auth', JSON.stringify(newAuth))
 				dispatch({type: 'EMAIL_VERIFICATION_FULFILLED'})
-
-				// link patient if needed 
-				if (results[0].type === 'PATIENT')
-					dispatch(linkPatient())
 			}
 		})
 		.catch((error) => {
