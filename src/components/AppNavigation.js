@@ -114,7 +114,7 @@ class Init extends Component {
 
 const defaultNavOptions = {
 	headerStyle: {
-		backgroundColor: colors.darkerBackground,
+		backgroundColor: colors.dark,
 	},
 	headerTitleStyle: {
 		color: 'white',
