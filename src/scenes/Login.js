@@ -143,8 +143,15 @@ export default class Login extends Component {
 
 		this.props.dispatch(userActions.login(username, password))
 		.then((user) => {
-			if (user)
-				this.goToHome()
+			if (user) {
+				this.props.dispatch(userActions.checkEmailVerification())
+				.then((isVerified) => {
+					if (isVerified)
+						this.goToHome()
+					else 
+						this.goToUnverifiedEmailScreen()
+				})
+			}
 		}).done()
 	}
 

@@ -201,7 +201,9 @@ export function checkEmailVerification() {
 				const newAuth = {user: results[0], sessionToken: state.user.sessionToken}
 				AsyncStorage.setItem('auth', JSON.stringify(newAuth))
 				dispatch({type: 'EMAIL_VERIFICATION_FULFILLED'})
+				return true
 			}
+			else return false
 		})
 		.catch((error) => {
 			helpers.handleParseError(error, dispatch)
