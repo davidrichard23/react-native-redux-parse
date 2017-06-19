@@ -10,4 +10,6 @@ To get started, all you need to do is clone this repo, run npm install, and upda
 
 ## Issues
 
-In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. What you need to is change the import line in ``node_modules/parse/lib/react-native/StorageController.react-native.js`` to ``import { AsyncStorage } from 'react-native/Libraries/react-native/react-native-implementation.js'`` until the Parse JS SDK is updated.
+In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. 
+
+What you need to is change the import line in ``node_modules/parse/lib/react-native/StorageController.react-native.js`` to ``import { AsyncStorage } from 'react-native/Libraries/react-native/react-native-implementation.js'`` until the Parse JS SDK is updated.
