@@ -16,7 +16,6 @@ import colors from '../utils/colors.json'
   return {
     nav: store.nav,
     isSignup: store.loginUI.isSignup,
-    isProvider: store.loginUI.isProvider,
     user: store.loginUI.user,
     loading: store.user.loading,
   }
@@ -41,8 +40,7 @@ export default class Login extends Component {
 
 		const submitText = !this.props.isSignup ? 'Login' : 'Signup'
 		const toggleText = this.props.isSignup ? 'Login' : 'Signup'
-		const segmentChoices = ['Non-Provider', 'Provider']
-		const selectedSegment = this.props.isProvider ? 1 : 0
+
 
 		return (
 			<View style={styles.container}>
@@ -182,7 +180,7 @@ export default class Login extends Component {
 		})
 	}
 
-	
+
 	goToHome() {
 		this.props.navigation.dispatch(NavigationActions.reset({index: 0, key: null, actions: [NavigationActions.navigate({ routeName: 'Main'})]}))
 	}
