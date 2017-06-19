@@ -1,0 +1,5 @@
+{
+	"host": "<PARSE_SERVER_HOST>",
+	"appId": "<PARSE_APP_ID>",
+	"verboseErrors": true
+}
