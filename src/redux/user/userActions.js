@@ -37,8 +37,16 @@ export function getCurrentUser() {
 		})
 		.then((results) => {
 			if (results && results.length > 0) {
-				AsyncStorage.setItem('sessionToken', sessionToken)
-				dispatch({type: 'GET_USER_FULFILLED', payload: {sessionToken, user: results[0]}})
+				const user = results[0]
+				const userPointer = helpers.createPointer(user.objectId, '_User')
+
+				const query = Query.equalTo({}, 'user', userPointer)
+				return Query.find(app, 'Profile', query)
+				.then(profiles => {
+					const profile = profiles[0]
+					AsyncStorage.setItem('sessionToken', sessionToken)
+					dispatch({type: 'GET_USER_FULFILLED', payload: {sessionToken, user, profile}})
+				})
 			}
 			else
 				dispatch({type: 'GET_USER_FULFILLED', payload: {}})
@@ -185,6 +193,8 @@ export function createProfile(data) {
 			username: data.username,
 			gender: data.gender,
 			dob: data.dob,
+			user: helpers.createPointer(user.objectId, '_User'),
+			interests: [],
 		}
 
 		dispatch({type: 'CREATE_PROFILE'})

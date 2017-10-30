@@ -15,9 +15,10 @@ export default function reducer(state={
 			return {...state, loading: true}
 		}
 		case 'GET_USER_FULFILLED' : {
-			const user = action.payload.user
-			const sessionToken = action.payload.sessionToken
-			return {...state, loading: false, user, sessionToken}
+			const user = action.payload.user || null
+			const profile = action.payload.profile || null
+			const sessionToken = action.payload.sessionToken || null
+			return {...state, loading: false, user, profile, sessionToken}
 		}
 		case 'GET_USER_REJECTED' : {
 			return {...state, loading: false, error: action.payload}
