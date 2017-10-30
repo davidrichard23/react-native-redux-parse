@@ -66,13 +66,12 @@ class AppNavigation extends Component {
   return {
   	nav: store.nav,
     user: store.user.user,
-    sessionToken: store.user.sessionToken
   }
 })
 class Init extends Component {
 
 	componentWillMount() {
-		this.getSessionToken()
+		this.getCurrentUser()
 	}
 
 	render() {
@@ -80,7 +79,7 @@ class Init extends Component {
 		return <Loader fullScreen={true} />
 	}
 
-	getSessionToken() {
+	getCurrentUser() {
 
 		this.props.dispatch(userActions.getCurrentUser())
 		.then(() => {
@@ -91,22 +90,16 @@ class Init extends Component {
 
 	chooseInitialRoute() {
 
-		let actions = []
-		if (!this.props.sessionToken) 
-			actions.push(NavigationActions.navigate({ routeName: 'Login'}))
-		else {
-			if (!this.props.user.emailVerified) 
-				actions = [NavigationActions.navigate({ routeName: 'UnverifiedEmail'})]
-			else {
-				actions = [NavigationActions.navigate({ routeName: 'Main'})]
-			}
-		} 
+		const isNew = this.props.user && !this.props.user.email === true
 
-		this.props.navigation.dispatch(NavigationActions.reset({
-		  index: 0,
-		  key: null,
-		  actions: actions,
-		}))
+		if (!this.props.user || isNew) 
+			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Modal'})]}))
+		// else if (!this.props.user.emailVerified) {
+		// 	this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Modal'})]}))
+		// 	this.props.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({routeName: 'UnverifiedEmail'})]}))
+		// }
+    else
+			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Main'})]}))
 	}
 }
 
@@ -124,12 +117,19 @@ const defaultNavOptions = {
 
 
 
-const DismissableLoginNavigator = DismissableStackNavigator({
+const ModalNavigator = DismissableStackNavigator({
   Login: { 
   	screen: Login,
   	navigationOptions: {
   		title: 'Login',
   		gesturesEnabled: false,
+    },
+  },
+  UnverifiedEmail: {
+  	screen: UnverifiedEmail,
+  	navigationOptions: {
+  		gesturesEnabled: false,
+  		header: null,
     },
   },
 }, {
@@ -165,20 +165,8 @@ const RootNavigator = StackNavigator({
   		headerBackTitle: null,
     }),
   },
-  Login: {
-  	screen: DismissableLoginNavigator,
-  	navigationOptions: {
-  		title: 'Login',
-  		gesturesEnabled: false,
-  		header: null,
-    },
-  },
-  UnverifiedEmail: {
-  	screen: UnverifiedEmail,
-  	navigationOptions: {
-  		gesturesEnabled: false,
-  		header: null,
-    },
+  Modal: { 
+  	screen: ModalNavigator,
   },
 }, {
   mode: 'modal',

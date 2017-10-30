@@ -42,14 +42,7 @@ export default class UnverifiedEmail extends Component {
 		if (!nextProps.user) return
 
 		if (nextProps.user.emailVerified) {
-			const isPatientUser = this.props.user.type === 'PATIENT'
-			actions = [NavigationActions.navigate({ routeName: 'Main'})]
-			
-			this.props.navigation.dispatch(NavigationActions.reset({index: 0, key: null, actions: actions}))
-
-			if (isPatientUser)
-				this.props.navigation.dispatch(NavigationActions.reset({index: 0, actions: [NavigationActions.navigate({routeName: 'Patient', params: {isPatientUser}})]}))
-
+			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'MainNavigator'})]}))
 			AppState.removeEventListener('change', this._handleAppStateChange);
 		}
 	}
@@ -80,6 +73,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+		backgroundColor: colors.background,
 	},
 	titleText: {
 		color: colors.primary,

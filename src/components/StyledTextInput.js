@@ -10,6 +10,7 @@ export default class StyledTextInput extends Component {
 		const inlineStyle = {
 			height: this.props.height || 40,
 			borderRadius: this.props.borderRadius || 0,
+			marginBottom: this.props.marginBottom || 0,
 			...this.props.styleOveride,
 		}
 
@@ -18,7 +19,7 @@ export default class StyledTextInput extends Component {
 				<TextInput
 					style={[styles.input, inlineStyle]}
 					clearButtonMode={'while-editing'} 
-					placeholderTextColor='rgba(255,255,255,0.3)' 
+					placeholderTextColor={colors.primaryLight} 
 					underlineColorAndroid='transparent'
 					keyboardAppearance='dark'
 					{...this.props} 
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
 	container: {
 		borderWidth: 0,
 		alignSelf: 'stretch',
-		marginBottom: 1,
 	},
 	input: {
 		color: 'white',

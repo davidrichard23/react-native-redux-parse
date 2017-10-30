@@ -3,16 +3,24 @@ import update from 'immutability-helper'
 
 export default function reducer(state={
 	user: null,
+	profile: null,
+	fbData: null,
 	sessionToken: null,
 	loading: false,
 	error: null,
 }, action) {
 	switch(action.type) {
 
-		case 'SET_USER_AUTH' : {
+		case 'GET_USER' : {
+			return {...state, loading: true}
+		}
+		case 'GET_USER_FULFILLED' : {
 			const user = action.payload.user
 			const sessionToken = action.payload.sessionToken
-			return {...state, user: user, sessionToken: sessionToken, loading: false}
+			return {...state, loading: false, user, sessionToken}
+		}
+		case 'GET_USER_REJECTED' : {
+			return {...state, loading: false, error: action.payload}
 		}
 
 
@@ -44,6 +52,28 @@ export default function reducer(state={
 		}
 
 
+		case 'CREATE_PROFILE' : {
+			return {...state, loading: true}
+		}
+		case 'CREATE_PROFILE_FULFILLED' : {
+			return {...state, loading: false, profile: action.payload}
+		}
+		case 'CREATE_PROFILE_REJECTED' : {
+			return {...state, loading: false, error: action.payload}
+		}
+
+
+		case 'FETCH_FB_PROFILE_DATA' : {
+			return {...state, loading: true}
+		}
+		case 'FETCH_FB_PROFILE_DATA_FULFILLED' : {
+			return {...state, loading: false, fbData: action.payload}
+		}
+		case 'FETCH_FB_PROFILE_DATA_REJECTED' : {
+			return {...state, loading: false, error: action.payload}
+		}
+
+
 
 		case 'RESEND_EMAIL_VERIFICATION' : {
 			return {...state, loading: true}
@@ -59,6 +89,11 @@ export default function reducer(state={
 		case 'EMAIL_VERIFICATION_FULFILLED' : {
 			const newUser = update(state.user, {emailVerified: {$set: true}})
 			return {...state, user: newUser}
+		}
+
+
+		case 'LOGOUT' : {
+			return {...state, user: null, sessionToken: null}
 		}
 
 

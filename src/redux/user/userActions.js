@@ -5,6 +5,15 @@ import { NavigationActions } from 'react-navigation'
 import helpers from '../../utils/helpers'
 import config from '../../../config'
 
+const FBSDK = require('react-native-fbsdk');
+const {
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+  LoginManager,
+} = FBSDK;
+
+
 const app = new App({
   host: config.host, 
   applicationId: config.appId, 
@@ -15,30 +24,84 @@ export function getCurrentUser() {
 
 	return (dispatch) => {
 
-		dispatch({type: 'SET_USER_LOADING', payload: true})
+		dispatch({type: 'GET_USER'})
 
-		let auth = null
+		let sessionToken = null
 
-		return AsyncStorage.getItem('auth')
+		return AsyncStorage.getItem('sessionToken')
 		.then((result) => {
 			if (result){
-				auth = JSON.parse(result)
-				return checkExpiredSession(auth.sessionToken, dispatch)
+				sessionToken = result
+				return Query.find(app, '_User', {}, {sessionToken: sessionToken})
 			}
-			else
-				dispatch({type: 'SET_USER_LOADING', payload: false})
 		})
-		.then((isValid) => {
-			if (isValid) {
-				AsyncStorage.setItem('auth', JSON.stringify(auth))
-				dispatch({type: 'SET_USER_AUTH', payload: auth})
+		.then((results) => {
+			if (results && results.length > 0) {
+				AsyncStorage.setItem('sessionToken', sessionToken)
+				dispatch({type: 'GET_USER_FULFILLED', payload: {sessionToken, user: results[0]}})
 			}
 			else
-				dispatch({type: 'SET_USER_LOADING', payload: false})
+				dispatch({type: 'GET_USER_FULFILLED', payload: {}})
 		})
 		.catch((error) => {
 			helpers.handleParseError(error, dispatch)
+			dispatch({type: 'GET_USER_REJECTED', payload: error})
 		})
+	}
+}
+
+
+
+export function facebookLogin(data) {
+
+	return (dispatch) => {
+
+		dispatch({type: 'USER_LOGIN'})
+
+    let authData = {
+      authData: {
+        id: data.userID,
+        access_token: data.accessToken
+	    }
+    };
+
+		return Parse.User.logInWith('facebook', authData)
+		.then((user) => {
+			user = user.toJSON()
+			const sessionToken = user.sessionToken
+			AsyncStorage.setItem('sessionToken', sessionToken)
+			dispatch({type: 'USER_LOGIN_FULFILLED', payload: {user: user, sessionToken: sessionToken}})
+
+			return user
+		})
+		.catch((error) => {
+			helpers.handleParseError(error, dispatch)
+			dispatch({type: 'USER_LOGIN_REJECTED', payload: error})
+		})
+	}
+}
+
+
+
+export function fetchFacebookProfileData() {
+
+	return (dispatch) => {
+
+		dispatch({type: 'FETCH_FB_PROFILE_DATA'})
+
+    const infoRequest = new GraphRequest(
+      '/me?fields=id,first_name,picture.type(large),birthday,gender,email',
+      null,
+      (error, result) => {
+      	if (error) {
+  				dispatch({type: 'FETCH_FB_PROFILE_DATA_REJECTED', payload: error})
+  				return
+      	}
+
+  			dispatch({type: 'FETCH_FB_PROFILE_DATA_FULFILLED', payload: result})
+      }
+    )
+    new GraphRequestManager().addRequest(infoRequest).start()
 	}
 }
 
@@ -51,16 +114,21 @@ export function login(username, password) {
 		dispatch({type: 'USER_LOGIN'})
 		username = username.toLowerCase()
 
+		let sessionToken = null
+		let user = null
+
 		return User.logIn(app, {username, password})
 		.then((auth) => {
 			// set the user on the official Parse SDK for the few times it is needed (LiveQueries, Saving Files)
-			return Parse.User.become(auth.sessionToken)
-			.then(() => {
-				AsyncStorage.setItem('auth', JSON.stringify(auth))
-				dispatch({type: 'USER_LOGIN_FULFILLED', payload: {user: auth.user, sessionToken: auth.sessionToken}})
+			sessionToken = auth.sessionToken
+			user = auth.user
+			return Parse.User.become(sessionToken)
+		})
+		.then(() => {
+			AsyncStorage.setItem('sessionToken', sessionToken)
+			dispatch({type: 'USER_LOGIN_FULFILLED', payload: {user: user, sessionToken: sessionToken}})
 
-				return auth.user
-			})
+			return user
 		})
 		.catch((error) => {
 			helpers.handleParseError(error, dispatch)
@@ -70,16 +138,16 @@ export function login(username, password) {
 }
 
 
-export function signup(info) {
+export function signup(data) {
 
 	return (dispatch, getState) => {
 
 		let user = null
 		let sessionToken = null
 
-		const email = info.email.value.toLowerCase()
-		const password = info.password.value
-		const username = info.username.value.toLowerCase()
+		const email = data.email
+		const password = data.password
+		const username = data.username
 
 		dispatch({type: 'USER_SIGNUP'})
 
@@ -92,22 +160,59 @@ export function signup(info) {
 			return Parse.User.become(auth.sessionToken)
 		})
 		.then(() => {
-			// update the user ACL
-			const acl = {[user.objectId]: {read: true, write: true}}
-			let updatedUser = Ops.set(user, {ACL: acl})
-
-			return Save(app, '_User', updatedUser, {sessionToken})
-		})
-		.then((result) => {
-			user = result
-			const auth = {user, sessionToken}
-			AsyncStorage.setItem('auth', JSON.stringify(auth))
-			dispatch({type: 'USER_SIGNUP_FULFILLED', payload: auth})
-			return result
+			AsyncStorage.setItem('sessionToken', sessionToken)
+			dispatch({type: 'USER_SIGNUP_FULFILLED', payload: {user, sessionToken}})
 		})
 		.catch((error) => {
 			helpers.handleParseError(error, dispatch)
 			dispatch({type: 'USER_SIGNUP_REJECTED', payload: error})
+		})
+	}
+}
+
+
+export function createProfile(data) {
+
+	return (dispatch, getState) => {
+
+
+		const state = getState()
+		const sessionToken = state.user.sessionToken
+		const user = {objectId: state.user.user.objectId}
+
+		let profile = {
+			firstName: data.firstName,
+			username: data.username,
+			gender: data.gender,
+			dob: data.dob,
+		}
+
+		dispatch({type: 'CREATE_PROFILE'})
+
+		// update the user ACL
+		const userAcl = {[user.objectId]: {read: true, write: true}}
+		let updatedUser = Ops.set(user, {ACL: userAcl})
+		updatedUser = Ops.set(updatedUser, {username: data.username})
+		updatedUser = Ops.set(updatedUser, {email: data.email})
+
+		return Save(app, '_User', updatedUser, {sessionToken})
+		.then((result) => {
+			const file = new Parse.File("image.jpg", {base64: data.avatar}, "image/jpeg");
+			return file.save()
+		})
+		.then(response => {
+			const profileAcl = {[user.objectId]: {read: true, write: true}, ['*']: {read: true, write: false}}
+			profile.avatar = response.toJSON()
+			profile.ACL = profileAcl
+
+			return Save(app, 'Profile', profile, {sessionToken})
+		})
+		.then(response => {
+			dispatch({type: 'CREATE_PROFILE_FULFILLED', payload: response})
+		})
+		.catch((error) => {
+			helpers.handleParseError(error, dispatch)
+			dispatch({type: 'CREATE_PROFILE_REJECTED', payload: error})
 		})
 	}
 }
@@ -119,9 +224,11 @@ export function logout() {
 
   	const state = getState()
   	const sessionToken = state.user.sessionToken
-    AsyncStorage.removeItem('auth')
-    dispatch({type: 'SET_USER_AUTH', payload: {user: null, sessionToken: null}})
+    AsyncStorage.removeItem('sessionToken')
+    dispatch({type: 'LOGOUT'})
     dispatch(NavigationActions.navigate({ routeName: 'Login'}))
+
+    LoginManager.logOut()
 
     // logout of the official Parse SDK
     return Parse.User.logOut()
@@ -198,8 +305,6 @@ export function checkEmailVerification() {
 		return Query.find(app, '_User', q, {sessionToken})
 		.then((results) => {
 			if (results.length > 0) {
-				const newAuth = {user: results[0], sessionToken: state.user.sessionToken}
-				AsyncStorage.setItem('auth', JSON.stringify(newAuth))
 				dispatch({type: 'EMAIL_VERIFICATION_FULFILLED'})
 				return true
 			}
