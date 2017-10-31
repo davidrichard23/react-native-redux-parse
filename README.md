@@ -32,4 +32,6 @@ try {
 
 to:
 
-`let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;`
+```javascript
+let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
+```
