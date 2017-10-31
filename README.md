@@ -12,7 +12,7 @@ To get started, all you need to do is clone this repo, run `npm install`, and up
 
 ## Facebook Login
 
-To use Facebook login, you'll need to follow the install instructions [here](https://github.com/facebook/react-native-fbsdk)
+To use Facebook login, you'll need to follow the install instructions [here](https://github.com/facebook/react-native-fbsdk) (start at step #3)
 
 Otherwise just remove the FBLoginButton in src/scenes/Login.js
 
@@ -20,12 +20,12 @@ Otherwise just remove the FBLoginButton in src/scenes/Login.js
 
 In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. 
 
-It seems like the latest Parse SDK tried to fix this with a try statement but I still receive an error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change these lines:
+It seems like the latest Parse SDK(1.10.0) tried to fix this with a try statement but I still receive the error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change these lines:
 
 ```javascript
 let AsyncStorage;
 try {
-  for React Native 0.43+
+  //for React Native 0.43+
   AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
 } catch (error) {
   AsyncStorage = require('react-native/Libraries/react-native/react-native.js').AsyncStorage;
