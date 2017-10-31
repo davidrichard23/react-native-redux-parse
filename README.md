@@ -27,10 +27,9 @@ try {
   AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
 } catch (error) {
   AsyncStorage = require('react-native/Libraries/react-native/react-native.js').AsyncStorage;
-}```
+}
+```
 
 to:
 
 `let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;`
-
-What you need to is change the import line in ``node_modules/parse/lib/react-native/StorageController.react-native.js`` to ``import { AsyncStorage } from 'react-native/Libraries/react-native/react-native-implementation.js'`` until the Parse JS SDK is updated.
