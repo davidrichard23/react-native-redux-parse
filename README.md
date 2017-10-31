@@ -18,7 +18,7 @@ Otherwise just remove the FBLoginButton in src/scenes/Login.js
 
 In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. 
 
-It seems like the latest Parse SDK tried to fix this with a try statement but I still receive an error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change
+It seems like the latest Parse SDK tried to fix this with a try statement but I still receive an error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change these lines:
 
 ```javascript
 let AsyncStorage;
@@ -30,7 +30,7 @@ try {
 }
 ```
 
-to:
+to this:
 
 ```javascript
 let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
