@@ -8,8 +8,28 @@ It also uses [React Navigation](https://github.com/react-community/react-navigat
 
 To get started, all you need to do is clone this repo, run npm install, and update ``config.json`` with your Parse Server host and App ID
 
+## Facebook Login
+
+To use Facebook login, you'll need to follow the install instructions [here](https://github.com/facebook/react-native-fbsdk)
+
+Otherwise just remove the FBLoginButton in src/scenes/Login.js
+
 ## Issues
 
 In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. 
+
+It seems like the latest Parse SDK tried to fix this with a try statement but I still receive an error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change
+
+```let AsyncStorage;
+try {
+  for React Native 0.43+
+  AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
+} catch (error) {
+  AsyncStorage = require('react-native/Libraries/react-native/react-native.js').AsyncStorage;
+}```
+
+to:
+
+```let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;```
 
 What you need to is change the import line in ``node_modules/parse/lib/react-native/StorageController.react-native.js`` to ``import { AsyncStorage } from 'react-native/Libraries/react-native/react-native-implementation.js'`` until the Parse JS SDK is updated.
