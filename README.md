@@ -20,7 +20,8 @@ In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was
 
 It seems like the latest Parse SDK tried to fix this with a try statement but I still receive an error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change
 
-```let AsyncStorage;
+```javascript
+let AsyncStorage;
 try {
   for React Native 0.43+
   AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
@@ -30,6 +31,6 @@ try {
 
 to:
 
-```let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;```
+`let AsyncStorage = AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;`
 
 What you need to is change the import line in ``node_modules/parse/lib/react-native/StorageController.react-native.js`` to ``import { AsyncStorage } from 'react-native/Libraries/react-native/react-native-implementation.js'`` until the Parse JS SDK is updated.
