@@ -1,0 +1,32 @@
+dependencies: \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTScrollViewManager.m \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTScrollViewManager.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTViewManager.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTEventDispatcher.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/UIView+React.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTComponent.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTScrollView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTAutoInsetsProtocol.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTScrollableProtocol.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Views/RCTShadowView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Base/RCTRootView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/React/Modules/RCTUIManager.h

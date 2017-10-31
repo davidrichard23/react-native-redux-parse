@@ -1,0 +1,36 @@
+dependencies: \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTTextFieldManager.m \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTTextFieldManager.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventDispatcher.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFont.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView+Layout.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTShadowView.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTConvert+Text.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTShadowTextField.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTTextField.h \
+  /Users/David/Projects/react-native-redux-parse/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTView.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTTextInput.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTBackedTextInputViewProtocol.h \
+  /Users/David/Projects/react-native-redux-parse/node_modules/react-native/Libraries/Text/RCTUITextField.h

@@ -94,10 +94,10 @@ class Init extends Component {
 
 		if (!this.props.user || isNew) 
 			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Modal'})]}))
-		// else if (!this.props.user.emailVerified) {
-		// 	this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Modal'})]}))
-		// 	this.props.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({routeName: 'UnverifiedEmail'})]}))
-		// }
+		else if (!this.props.user.emailVerified) {
+			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Modal'})]}))
+			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({routeName: 'UnverifiedEmail'})]}))
+		}
     else
 			this.props.navigation.dispatch(NavigationActions.reset({ index: 0, key: null, actions: [NavigationActions.navigate({routeName: 'Main'})]}))
 	}
@@ -182,5 +182,4 @@ const navReducer = (state, action) => {
     const newState = RootNavigator.router.getStateForAction(action, state);
     return newState || state;
 };
-
 const store = getStore(navReducer);
