@@ -1,7 +1,6 @@
 {
-  "name": "Purple",
+  "name": "react-native-redux-parse",
   "version": "0.1.0",
-  "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
     "jest-expo": "^21.0.2",

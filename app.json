@@ -1,5 +1,4 @@
 {
-  "expo": {
-    "sdkVersion": "17.0.0"
-  }
+  "name": "react-native-redux-parse",
+  "displayName": "react-native-redux-parse"
 }
