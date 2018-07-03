@@ -40,7 +40,6 @@ export default class Login extends Component {
 			password: {isInvalid: false, value: ''},
 			username: {isInvalid: false, value: ''},
 			avatar: {isInvalid: false, value: null},
-			firstName: {isInvalid: false, value: ''},
 	  };
 
 	  this.submit = this.submit.bind(this)
@@ -132,22 +131,12 @@ export default class Login extends Component {
 		const email = this.state.email
 		const password = this.state.password
 		const username = this.state.username
-		const firstName = this.state.firstName
 
 		return (
 			<View style={styles.formContainer}>
 
 				{this.state.isSignup &&
 					<View style={styles.signupContainer}>
-						{firstName.isInvalid && this.state.isSignup && <FormError text='Please enter a valid first name' />}
-						<StyledTextInput 
-							placeholder='First Name'
-							value={firstName.value} 
-							autoCorrect={false}
-							borderRadius={3}
-							marginBottom={0.5}
-							onChangeText={this.onChangeText.bind(this, 'firstName')} 
-						/>
 						{email.isInvalid && this.state.isSignup && <FormError text='Please enter a valid email' />}
 						<StyledTextInput 
 							placeholder='Email'
@@ -258,7 +247,6 @@ export default class Login extends Component {
 		.then((imageData) => {
 			this.setState({
 				avatar: {...this.state.avatar, value: imageData},
-				firstName: {...this.state.firstName, value: fbData.first_name},
 				email: {...this.state.email, value: fbData.email},
 			})
 		})
@@ -292,7 +280,6 @@ export default class Login extends Component {
 			email: this.state.email.value.toLowerCase(),
 			username: this.state.username.value,
 			password: this.state.password.value.toLowerCase(),
-			firstName: this.state.firstName.value,
 		}
 
 		if (!this.validateSignup()) return 
@@ -326,7 +313,6 @@ export default class Login extends Component {
 		const email = this.state.email.value
 		const password = this.state.password.value
 		const username = this.state.username.value
-		const firstName = this.state.firstName.value
 		const avatar = this.state.avatar.value
 
 		if (!helpers.validateEmail(email)) {
@@ -349,12 +335,6 @@ export default class Login extends Component {
 			this.setIsInvalidField('username', true)
 		}
 		else this.setIsInvalidField('username', false)
-
-		if (firstName.length < 2) {
-			isValid = false
-			this.setIsInvalidField('firstName', true)
-		}
-		else this.setIsInvalidField('firstName', false)
 
 		if (avatar === null) {
 			isValid = false
