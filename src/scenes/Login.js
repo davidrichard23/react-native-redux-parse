@@ -11,26 +11,12 @@ import StyledButton from '../components/StyledButton'
 import colors from '../utils/colors.json'
 import helpers from '../utils/helpers'
 import ImagePicker from 'react-native-image-crop-picker'
-import Picker from 'react-native-picker'
 
 const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
   AccessToken,
 } = FBSDK;
-
-
-
-let datePickerData = [
-	['January','February','March','April','May','June','July','August','September','October','November','December'],
-	[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
-	[]
-]
-for (let i = 0; i<60; i++) {
-	datePickerData[2].push(2017-i)
-}
-
-
 
 
 
@@ -49,16 +35,12 @@ export default class Login extends Component {
 	
 	  this.state = {
 	  	isSignup: false,
-	  	isPickerOpen: false,
-	  	isPickingDOB: false,
 	  	isFacebookLoggedIn: false,
 	  	email: {isInvalid: false, value: ''},
 			password: {isInvalid: false, value: ''},
 			username: {isInvalid: false, value: ''},
 			avatar: {isInvalid: false, value: null},
 			firstName: {isInvalid: false, value: ''},
-			gender: {isInvalid: false, value: 'Male'},
-			dob: {isInvalid: false, value: ['January', 1, 2017]},
 	  };
 
 	  this.submit = this.submit.bind(this)
@@ -106,12 +88,12 @@ export default class Login extends Component {
 					{this.state.isSignup && this.Avatar()}
 					{this.Forms()}
 					
-	        {!this.state.isFacebookLoggedIn && 
+	        {/*!this.state.isFacebookLoggedIn && 
 						<LoginButton
 		          readPermissions={["email", "public_profile", "user_birthday", "user_photos"]}
 		          onLoginFinished={this.onFBLogin.bind(this)}
 		        />
-		      }
+		      */}
 
 					<StyledButton onPress={this.submit.bind(this)} text={submitText} />
 
@@ -120,11 +102,7 @@ export default class Login extends Component {
 							<Text style={styles.toggleButton}>{toggleText}</Text>
 						</TouchableOpacity>
 					}
-
-
 				</ScrollView>
-
-				{this.Pickers()}
 
 				<KeyboardSpacer />
 
@@ -155,8 +133,6 @@ export default class Login extends Component {
 		const password = this.state.password
 		const username = this.state.username
 		const firstName = this.state.firstName
-		const birthday = this.state.birthday
-		const gender = this.state.gender
 
 		return (
 			<View style={styles.formContainer}>
@@ -171,11 +147,6 @@ export default class Login extends Component {
 							borderRadius={3}
 							marginBottom={0.5}
 							onChangeText={this.onChangeText.bind(this, 'firstName')} 
-							onFocus={() => {
-								this.setState({isPickerOpen: false})
-								this.genderPicker.hide()
-								this.dobPicker.hide()
-							}}
 						/>
 						{email.isInvalid && this.state.isSignup && <FormError text='Please enter a valid email' />}
 						<StyledTextInput 
@@ -187,11 +158,6 @@ export default class Login extends Component {
 							borderRadius={3}
 							marginBottom={0.5}
 							onChangeText={this.onChangeText.bind(this, 'email')} 
-							onFocus={() => {
-								this.setState({isPickerOpen: false})
-								this.genderPicker.hide()
-								this.dobPicker.hide()
-							}}
 						/>
 					</View>
 				}
@@ -205,11 +171,6 @@ export default class Login extends Component {
 					borderRadius={3}
 					marginBottom={0.5}
 					onChangeText={this.onChangeText.bind(this, 'username')} 
-					onFocus={() => {
-						this.setState({isPickerOpen: false})
-						this.genderPicker.hide()
-						this.dobPicker.hide()
-					}}
 				/>
 
 				{password.isInvalid && this.state.isSignup && <FormError text='Passwords must be at least 8 characters with one capital and one number' />}
@@ -223,100 +184,11 @@ export default class Login extends Component {
 						borderRadius={3}
 						marginBottom={0.5}
 						onChangeText={this.onChangeText.bind(this, 'password')} 
-						onFocus={() => {
-							this.setState({isPickerOpen: false})
-							this.genderPicker.hide()
-							this.dobPicker.hide()
-						}}
 					/>
 				}
-
-				{this.state.isSignup && 
-					<View>
-						<TouchableOpacity 
-							onPress={() => this.handlePickerAction(this.genderPicker, this.dobPicker)}
-							style={styles.pickerSelector}>
-							<Text style={styles.pickerDescriptorText}>{`Gender  `}</Text>
-							<Text style={styles.pickerSelectorText}>{!this.state.gender.value ? 'Gender' : this.state.gender.value}</Text>
-						</TouchableOpacity>
-						<TouchableOpacity 
-							onPress={() => this.handlePickerAction(this.dobPicker, this.genderPicker)}
-							style={styles.pickerSelector}>
-							<Text style={styles.pickerDescriptorText}>{`DOB  `}</Text>
-							<Text style={styles.pickerSelectorText}>{`${this.state.dob.value[0]} ${this.state.dob.value[1]}, ${this.state.dob.value[2]}`}</Text>
-						</TouchableOpacity>
-					</View>
-				}	
 					
 			</View>
 		)
-	}
-
-
-	Pickers() {
-
-		return (
-			<View>
-				{this.state.isPickerOpen && <View style={{height: 240}} />}
-				<Picker
-					style={{
-						height: 300
-					}}
-					ref={genderPicker => this.genderPicker = genderPicker}
-					style={styles.picker}
-					showDuration={300}
-					pickerData={['Male','Female']}
-					selectedValue={this.state.gender.value}
-					onPickerDone={(selectedValue) => {
-						this.setState({
-							gender: {...this.state.gender, value: selectedValue},
-							isPickerOpen: false,
-						}
-					)}}
-					pickerCancelBtnText=''
-				/>
-				<Picker
-					style={{
-						height: 300
-					}}
-					ref={dobPicker => this.dobPicker = dobPicker}
-					style={styles.picker}
-					showDuration={300}
-					pickerData={datePickerData}
-					selectedValue={this.state.dob.value}
-					onPickerDone={(selectedValue) => {
-						this.setState({
-							dob: {...this.state.dob, value: selectedValue},
-							isPickerOpen: false,
-						}
-					)}}
-					pickerCancelBtnText=''
-				/>
-			</View>
-		)
-	}
-
-
-	handlePickerAction(primaryPicker, secondaryPicker) {
-
-		if (primaryPicker.isPickerShow()) {
-			this.setState({isPickerOpen: false})
-			primaryPicker.hide()
-		}
-		else {
-			if (secondaryPicker.isPickerShow()) {
-				secondaryPicker.hide()
-				this.setState({isPickerOpen: false})
-				setTimeout(() => {
-					this.setState({isPickerOpen: true})
-					primaryPicker.show()
-				}, 350)
-				return
-			}
-			this.setState({isPickerOpen: true})
-			primaryPicker.show()
-			Keyboard.dismiss()
-		}
 	}
 
 
@@ -382,22 +254,14 @@ export default class Login extends Component {
 
 	onFBDataReceived(fbData) {
 
-		const gender = fbData.gender === 'male' ? 'Male' : 'Female'
-		let dob = fbData.birthday.split('/')
-		dob[0] = datePickerData[0][Number(dob[0]) - 1]
-
 		this.fetchFBImageData(fbData.picture.data.url)
 		.then((imageData) => {
 			this.setState({
 				avatar: {...this.state.avatar, value: imageData},
 				firstName: {...this.state.firstName, value: fbData.first_name},
 				email: {...this.state.email, value: fbData.email},
-				gender: {...this.state.gender, value: gender},
-				dob: {...this.state.dob, value: dob},
 			})
-			
 		})
-
 	}
 
 
@@ -423,21 +287,13 @@ export default class Login extends Component {
 
 	signup() {
 
-		const dobArray = this.state.dob.value
-		const dob = new Date(dobArray.join('-'))
-		const gender = this.state.gender.value === 'Male' ? 'MALE' : 'FEMALE'
-
 		const data = {
 			avatar: this.state.avatar.value,
 			email: this.state.email.value.toLowerCase(),
 			username: this.state.username.value,
 			password: this.state.password.value.toLowerCase(),
 			firstName: this.state.firstName.value,
-			gender: gender,
-			dob: dob,
 		}
-
-		console.log(data)
 
 		if (!this.validateSignup()) return 
 
@@ -549,7 +405,6 @@ export default class Login extends Component {
 			console.log('Error: ' + error)
 		}).done()
 	}
-
 }
 
 
@@ -589,18 +444,5 @@ const styles = StyleSheet.create({
   toggleButton: {
   	color: colors.primary,
   	fontSize: 18,
-  },
-  pickerSelector: {
-  	backgroundColor: colors.dark,
-  	padding: 10,
-  	// justifyContent: 'flex',
-  	marginBottom: 0.5,
-  	flexDirection: 'row',
-  },
-  pickerDescriptorText: {
-  	color: colors.primaryLight,
-  },
-  pickerSelectorText: {
-  	color: 'white',
   },
 })
