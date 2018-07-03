@@ -84,6 +84,7 @@ export default class Login extends Component {
 			<View style={{flex: 1}}>
 				<ScrollView style={styles.container} contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps='handled'>
 
+					<Text style={styles.titleText}>Login Screen</Text>
 					{this.state.isSignup && this.Avatar()}
 					{this.Forms()}
 					
@@ -397,6 +398,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 25,
   },
+	titleText: {
+		color: colors.primary,
+		fontSize: 28,
+		textAlign: 'center',
+		marginVertical: 15,
+	},
   avatarContainer: {
 		alignItems: 'center',
   },

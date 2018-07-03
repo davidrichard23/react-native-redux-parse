@@ -26,11 +26,6 @@ export default class Notifications extends Component {
 	  };
 	}
 
-	componentDidMount() {
-		// this.props.dispatch(appActions.addNotification({title: 'New message from David Richard', body: 'This is the message from david talking about the progress on my injury.'}))
-	}
-
-
 	componentWillReceiveProps(nextProps) {
 		if (this.props.notifications.length < nextProps.notifications.length) {
 			this.showNotification(nextProps.notifications[0])
