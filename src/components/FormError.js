@@ -24,12 +24,17 @@ const styles = StyleSheet.create({
 	container: {
 		// flex: 1,
 		justifyContent: 'center',
-		backgroundColor: colors.red,
+		borderWidth: 1,
+		borderColor: colors.red,
 		alignSelf: 'stretch',
 		padding: 5,
+		paddingHorizontal: 15,
+		marginTop: 10,
+		marginBottom: 2,
+		borderRadius: 5,
 	},
 	errorText: {
-		color: 'white',
+		color: colors.red,
 		textAlign: 'center',
 	}
 })

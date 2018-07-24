@@ -14,11 +14,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface react-native-redux-parseTests : XCTestCase
+@interface reactNativeReduxParseTests : XCTestCase
 
 @end
 
-@implementation react-native-redux-parseTests
+@implementation reactNativeReduxParseTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

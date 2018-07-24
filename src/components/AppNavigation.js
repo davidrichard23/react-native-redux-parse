@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import DismissableStackNavigator from '../components/DismissableStackNavigator'
 import colors from '../utils/colors.json'
 
-import Init from '../scenes/Init'
-import Home from '../scenes/Home'
-import Login from '../scenes/Login'
-import UnverifiedEmail from '../scenes/UnverifiedEmail'
+import Init from './Init'
+import Home from '../screens/Home'
+import Login from '../screens/LoginContainer'
+import UnverifiedEmail from '../screens/UnverifiedEmail'
 
 
 export default AppNavigation = props => {
@@ -44,7 +44,7 @@ const ModalNavigator = DismissableStackNavigator({
   headerMode: 'none',
 })
 
-const RootNavigator = StackNavigator({
+const RootNavigator = createStackNavigator({
 	Init: {
 		screen: Init,
 		navigationOptions: {

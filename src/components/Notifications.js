@@ -1,21 +1,13 @@
 import React, {Component} from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Platform, StatusBar} from 'react-native'
+import { View, Text, StyleSheet, StatusBar} from 'react-native'
 import { connect } from 'react-redux'
-import * as appActions from '../redux/app/appActions'
-import { NavigationActions } from 'react-navigation'
+import * as appActions from '../actions/app'
 import colors from '../utils/colors.json'
 import * as Animatable from 'react-native-animatable';
 
 const DISPLAY_TIME = 5000
 
-@connect((store) => {
-  return {
-    user: store.user.user,
-    notifications: store.app.notifications,
-    nav: store.nav,
-  }
-})
-export default class Notifications extends Component {
+class Notifications extends Component {
 
 	constructor(props) {
 	  super(props);
@@ -81,7 +73,6 @@ export default class Notifications extends Component {
 const styles = StyleSheet.create({
 	container: {
 		position: 'absolute',
-		// height: Platform.OS !== 'ios' ? 54 : 64,
 		left: 0, right: 0,
 		backgroundColor: colors.primary,
 	},
@@ -99,3 +90,11 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 	},
 })
+
+
+
+export default connect((store) => {
+  return {
+    notifications: store.app.notifications,
+  }
+}, null)(Notifications)

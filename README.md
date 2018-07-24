@@ -1,39 +1,59 @@
-I created this template app to help expedite the proccess of creating a user account based React Native app using Redux and [Parse Server](https://github.com/parse-community/parse-server) for the backend.
+# A React Native app template using Parse Server for the backend. 
 
-By using this along with Parse Server, you can have a fully functional app and backend with login functionality and email verification in less than a 30 mins of setup.
+Enables you to have a React Native app with these capabilities up and running in minutes:
 
-It primarily uses [Parse-Lite](https://github.com/andrewimm/parse-lite) but also needs the official [Parse JS SDK](https://github.com/parse-community/Parse-SDK-JS) for certain things like Live Query and File uploads
+- User account/profile creation
+- User login
+- Email verification
+- Navigation
+- In-app Notifications
 
-It also uses [React Navigation](https://github.com/react-community/react-navigation)
+## Major Dependencies
+
+- [Parse-Lite](https://github.com/andrewimm/parse-lite) for most tasks 
+- [Official Parse JS SDK](https://github.com/parse-community/Parse-SDK-JS) for certain things like Live Query and File uploads
+- [React Navigation](https://github.com/react-community/react-navigation)
+- [Redux](https://github.com/reduxjs/redux)
 
 ## Getting Started
 
-To get started, all you need to do is clone this repo, run `npm install`, and update ``config.json`` with your Parse Server host and App ID
+1. Set up a [Parse Server](https://github.com/parse-community/parse-server) 
+2. Clone this repo
+3. Run `npm install`
+4. Update `src/utils/config.json` with your Parse Server host and App ID
+5. Run `react-native run-ios` or `react-native run-android`
 
-## Facebook Login
+## Working with the template
 
-To use Facebook login, you'll need to follow the install instructions [here](https://github.com/facebook/react-native-fbsdk) (start at step #3)
+#### Navigation 
 
-Otherwise just remove the FBLoginButton in src/scenes/Login.js
+To add new screens: 
 
-## Issues
+1. Create a new file in `src/screens`
+2. Open `src/components/AppNavigation.js`
+3. Import your new screen
+4. Add your new screen to either the `RootNavigator` or the `ModalNavigator`
 
-In React Native 0.43 ``react-native/Libraries/react-native/react-native.js`` was renamed to ``react-native/Libraries/react-native/react-native-implementation.js``. The Parse JS SDK references the old file so it'll throw an unknown module error. 
+#### Extra Profile Data
 
-It seems like the latest Parse SDK(1.10.0) tried to fix this with a try statement but I still receive the error. The fix for now is to open ``node_modules/parse/lib/react-native/StorageController.react-native.js`` and change these lines:
+The only data saved to a user's profile object is their username and avatar image. 
+To add more data to a user's profile (e.g. Full Name, DOB, Bio, etc), follow these steps:
 
-```javascript
-let AsyncStorage;
-try {
-  //for React Native 0.43+
-  AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
-} catch (error) {
-  AsyncStorage = require('react-native/Libraries/react-native/react-native.js').AsyncStorage;
-}
-```
+1. Open `src/reducers/loginUI.js`
+2. Add your new data fields to the initial state
+3. Open `src/screens/Login.js`
+4. Add whatever user input markup you need to the `Forms()` function or elsewhere
+5. Scroll down to the `signup()` function
+6. Add your new data to the `signupData` object
 
-to this:
+#### Email Verification
 
-```javascript
-let AsyncStorage = require('react-native/Libraries/react-native/react-native-implementation').AsyncStorage;
-```
+1. Setup your parse server for [email verification](https://github.com/parse-community/parse-server#email-verification-and-password-reset)
+2. Open `src/actions/user.js`
+3. Scroll down to `resendVerification()`
+4. Copy the commented function into your Parse Server Cloud Code file (the default is `cloud/main.js`)
+5. Remove comments and `alert` from `src/actions/user.js`
+
+#### Redux Reducers
+
+When adding new reducers, be sure to import and add it to the `combineReducers` function in `src/reducers/index.js`

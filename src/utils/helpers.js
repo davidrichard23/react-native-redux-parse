@@ -1,22 +1,24 @@
-
-import * as userActions from '../redux/user/userActions'
-import config from '../../config'
+import * as userActions from '../actions/user'
+import config from './config'
 
 
 export default helpers = {
 
-  createPointer(id, className) {
+  createParsePointer(id, className) {
     return {className: className, objectId: id, __type: 'Pointer'}
   },
 
-  validateEmail(email) {
+  validateUsername(username) {
+    const illegalChars = /\W/ // allow letters, numbers, and underscores
+    return username.length > 1 && !illegalChars.test(username)
+  },
 
+  validateEmail(email) {
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return re.test(email);
   },
 
   validatePassword(password) {
-
     if ( password.length < 8 || password.search(/[a-zA-Z]+/) == -1 || password.search(/[0-9]+/) == -1 ) return false;
     
     let hasUpper = false

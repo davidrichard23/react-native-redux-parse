@@ -1,0 +1,4 @@
+{
+	"host": "<YOUR_PARSE_SERVER_URL>",
+	"appId": "<YOUR_PARSE_SERVER_APP_ID>"
+}
